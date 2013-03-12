@@ -1,1 +1,2 @@
 Päiväys         käytetty aika           ajankäytön kohde
+12.3.2013       2h                      Projektin valmistelu ja alustus
