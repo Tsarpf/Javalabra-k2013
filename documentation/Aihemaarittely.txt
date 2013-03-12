@@ -1,0 +1,16 @@
+Aihe: Joko PC:llä / Androidilla tai molemmilla toimiva jokin hyvin yksinkertainen vuoropohjainen peli + palvelin. 
+
+Jos oman palvelimen kirjoittaminen vaikuttaa ensimmäisen viikon aikana tehdyn arvion aikana tarpeeksi helpolta, luultavasti peli on tasoa kivi-sakset-paperi. Jos serverin tekeminen osoittautuu oletettua vaikeammaksi ja ei tule onnistumaan, aihe vaihtunee lokaaliksi ristinollaksi/miinaharavaksi/joksikin muuksi vastaavaksi
+
+Palvelin oletettavasti hyvin yksinkertainen socketien kautta JSONia edestakaisin siirtävä.
+
+
+
+
+Kurssilla riittää varmaankin olettaa, että clientien lähettämä data on järkevää, joten siirtojen mahdollisuutta/järkevyyttä ei tarvitsene tarkistaa. 
+
+Palvelin siis hieman yksinkertaistettuna ainoastaan välittää siirtoja pelaajien välillä ja ehkä pitää kirjaa pelin tilanteesta.
+
+Palvelin voisi esimerkiksi kirjoittaa tilastoja vaikkapa tekstitiedostoon josta jokin cron tyylinen ratkaisu voisi päivittää arvoja toisinaan internetsivustolle (esim  virtuaalipalvelimelleni datisbox.net). Jotain mahdollisimman simppeliä kuitenkin.
+
+Palvelimesta on tarkoitus tehdä sellainen, että sitä on hyvin helppo laajentaa tukemaan myös muita kuin alkuperäistä peliä.
