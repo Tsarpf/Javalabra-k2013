@@ -60,7 +60,7 @@ public class HandshakeProtocol extends Protocol
 		}
 	}
 	
-	class GameAndUserData
+	public class GameAndUserData
 	{
 		String nickname;
 		String gamemode;
