@@ -3,14 +3,16 @@ package com.example.boulder_shears_document;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 public class IOHandler extends Handler
 {
 	SocketClient client;
-	public IOHandler (Looper looper)
+	public IOHandler (SocketClient client)
 	{
-		super(looper);
-		client = new SocketClient("datisbox.net", 6666);
+		super();
+		this.client = client;
+		Log.w("debug", "Creating IOHandler");
 	}
 	
 	public void handleMessage(Message msg)

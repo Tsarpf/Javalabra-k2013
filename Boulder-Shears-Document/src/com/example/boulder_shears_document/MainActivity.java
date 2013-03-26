@@ -3,7 +3,7 @@ package com.example.boulder_shears_document;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.HandlerThread;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -18,10 +18,26 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        Log.w("debug", "reached onCreate MainActivity");
+        
         setContentView(R.layout.activity_main);
         
-        iothread = new IOThread(); //Starts a new thread which handles all IO over networks
-        iothread.sendMessageToThread("HELLO");
+    	iothread = new IOThread(); //Starts a new thread which handles all IO over networks
+    	iothread.start();
+
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+    	iothread.sendMessageToThreadFromOtherThread("HELLO");
+
+    	//Log.w("thread", "Exception: " + e.getMessage());
     }
 
 

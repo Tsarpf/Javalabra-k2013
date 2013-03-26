@@ -60,6 +60,7 @@ public class Server
         
         try
         {
+        	System.err.println("waiting for accept");
         	clientSocket = serverSocket.accept(); //Waits until client connects
         }
         catch(IOException e)
@@ -68,7 +69,7 @@ public class Server
         	e.printStackTrace();
         	System.exit(1);
         }
-        
+    	System.err.println("through accept");
         
         try
         {

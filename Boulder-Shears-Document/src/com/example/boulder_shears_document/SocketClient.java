@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -16,22 +17,28 @@ public class SocketClient
 	BufferedReader in;
 	public SocketClient(String host, int port)
 	{
+		Log.w("debug", "Creating SocketClient");
 		try
 		{
-			socket = new Socket(host, port);
+			Log.w("debug", "new socket");
+			//socket = new Socket(host, port);
+			socket = new Socket();
+			socket.connect(new InetSocketAddress(host, port), 5000);
+			Log.w("debug", "new writer");
 			out = new PrintWriter(socket.getOutputStream(), true);
+			Log.w("debug", "new reader");
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
 		}
 		catch(UnknownHostException e)
 		{
-			System.err.println("Couldn't find host '" + host + "' in port '" + port + "'");
 			Log.w("NetworkError", "Couldn't find host '" + host + "' in port '" + port + "'");
 		}
 		catch(IOException e)
 		{
-			System.err.println("Couldn't get I/O streams for host");
-			Log.w("NetworkError", "Couldn't get I/O streams for host");
+			Log.w("NetworkError", "Couldn't get I/O streams for host: " + e.getMessage());
 		}
+		Log.w("debug", "SocketClient made");
 	}
 	
 	public void sendLine(String message)

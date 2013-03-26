@@ -17,6 +17,7 @@ public class HandshakeProtocol extends Protocol
 	@Override
 	public String processInput(String input)
 	{
+		System.out.println(input);
 		if(input.startsWith("HELLO"))
 		{
 			System.out.println("Got hello, sending ping");
