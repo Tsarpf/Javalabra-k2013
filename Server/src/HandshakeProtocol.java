@@ -11,6 +11,7 @@ public class HandshakeProtocol extends Protocol
 	public HandshakeProtocol()
 	{
 		super();
+		this.type = ProtocolType.HANDSHAKE;
 		ping = new Random().nextInt();
 	}
 	

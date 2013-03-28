@@ -1,54 +1,89 @@
 package com.example.boulder_shears_document;
 
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
-public class IOThread extends HandlerThread
+import com.google.gson.Gson;
+
+public class IOThread extends Thread
 {
-	IOHandler handler;
 	SocketClient client;
+	String host;
+	int port;
+	ThreadSafeQueue writeQueue, readQueue;
 	
-	public IOThread() 
+	public IOThread(String host, int port, ThreadSafeQueue writeQueue, ThreadSafeQueue readQueue)
 	{
-		super("IO Worker");
-		Log.w("debug", "Creating IOThread");
-	}
-	
-	public void sendMessageToThreadFromOtherThread(Object message)
-	{
-		Message msg = handler.obtainMessage();
+		this.host = host;
+		this.port = port;
 		
-		msg.obj = message;
-		
-		handler.sendMessage(msg);
+		this.writeQueue = writeQueue;
+		this.readQueue = readQueue;
 	}
 	
 	@Override
 	public void run()
 	{
-		Log.w("debug", "running IOThread");
-
 		try
 		{
-			Log.w("debug", "going to prepare...");
-			Looper.prepare();
-			Log.w("debug", "...prepared");
+			client = new SocketClient(host,port);
+			Object o;
 			
-			//10.0.2.2 is the IP for desktop to which android is connected via USB
-			client = new SocketClient("datisbox.net", 6666);
-			Log.w("debug", "created client");
-			handler = new IOHandler(client);
-			Log.w("debug", "created handler");
-			
-			Looper.loop();
-			Log.w("debug", "looping");
+			while(true)
+			{
+				if(client.readyForRead())
+				{
+					read();
+				}
+				
+				if((o = writeQueue.dequeue()) != null)
+				{
+					write(o);
+				}
+				
+				Thread.sleep(50);
+			}
 		}
 		catch(Exception e)
 		{
-			Log.w("debug","thread run problems: " + e.getMessage());
+			Log.w("IOThread", "IOThread crashed: " + e.getMessage());
 		}
-		Log.w("debug", "got through thread run function");
+		
+		client.close(); //Good manners
 	}
+	
+	private void write(Object o)
+	{
+		if(o instanceof String)
+		{
+			client.sendLine((String) o);
+		}
+		else
+		{
+			Gson gson = new Gson();
+			//gson.toJson(o, o.getClass());
+			String json = gson.toJson(o);
+			client.sendLine(json);
+		}
+	}
+	
+	private void read()
+	{
+		String line = client.readLine();
+		Log.w("IOThread read","From server: " + line);
+		
+		if(line.startsWith("PING"))
+		{
+			writeQueue.enqueue(pong(line));
+			return;
+		}
+		
+		//TODO: some smart checking of whether it's JSON or just plain text 
+		readQueue.enqueue(line);
+	}
+	
+	private String pong(String ping)
+	{
+		return "PONG" + ping.substring(4);
+	}
+	
 }

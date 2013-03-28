@@ -46,7 +46,7 @@ public class SocketClient
 		out.println(message);
 	}
 	
-	public String getLine()
+	public String readLine()
 	{
 		try
 		{
@@ -57,6 +57,11 @@ public class SocketClient
 			e.printStackTrace();
 			return "Couldn't read line from stream because: " + e.getMessage();
 		}
+	}
+	
+	public boolean readyForRead() throws IOException
+	{
+		return in.ready();
 	}
 	
 	public void close()

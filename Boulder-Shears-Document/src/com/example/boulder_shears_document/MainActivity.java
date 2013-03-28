@@ -12,32 +12,29 @@ public class MainActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.boulder_shears_document.MESSAGE";
 	
-	IOThread iothread;
+
+	IOThread ioThread;
+	ThreadSafeQueue readQueue, writeQueue;
+	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         
-        Log.w("debug", "reached onCreate MainActivity");
         
         setContentView(R.layout.activity_main);
+     
+    	
         
-    	iothread = new IOThread(); //Starts a new thread which handles all IO over networks
-    	iothread.start();
+    	readQueue = new ThreadSafeQueue();
+    	writeQueue = new ThreadSafeQueue();
+    	
+    	//writeQueue.enqueue("HELLO");
+    	
+    	ioThread = new IOThread("datisbox.net", 6666, writeQueue, readQueue);
+    	ioThread.start();
 
-		try
-		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-    	iothread.sendMessageToThreadFromOtherThread("HELLO");
-
-    	//Log.w("thread", "Exception: " + e.getMessage());
     }
 
 
@@ -57,7 +54,16 @@ public class MainActivity extends Activity {
     	EditText editText = (EditText) findViewById(R.id.edit_message);
     	String message = editText.getText().toString();
     	
-    	intent.putExtra(EXTRA_MESSAGE, message);
+    	writeQueue.enqueue(message);
+    	
+    	String response;
+    	
+    	while((response = (String)readQueue.dequeue()) == null)
+    	{}
+    	
+    	
+    	
+    	intent.putExtra(EXTRA_MESSAGE, response);
     	
     	startActivity(intent);
     }
