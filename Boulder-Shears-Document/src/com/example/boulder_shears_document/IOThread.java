@@ -4,6 +4,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+/**
+ * Handles all network input and output on a single separate thread
+ * @author Tsarpf
+ *
+ */
 public class IOThread extends Thread
 {
 	SocketClient client;
@@ -20,6 +25,10 @@ public class IOThread extends Thread
 		this.readQueue = readQueue;
 	}
 	
+	
+	/**
+	 * Starts running the thread
+	 */
 	@Override
 	public void run()
 	{

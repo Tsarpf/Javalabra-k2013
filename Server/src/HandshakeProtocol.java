@@ -1,6 +1,10 @@
 import java.util.Random;
 
-
+/**
+ * Protocol that handles basic handshaking between client and server
+ * @author Tsarpf
+ * 
+ */
 public class HandshakeProtocol extends Protocol
 {
 	
@@ -15,6 +19,7 @@ public class HandshakeProtocol extends Protocol
 		ping = new Random().nextInt();
 	}
 	
+
 	@Override
 	public String processInput(String input)
 	{
@@ -61,6 +66,11 @@ public class HandshakeProtocol extends Protocol
 		}
 	}
 	
+	/**
+	 * Used to contain information needed for preparing server to handle the game client wants to play
+	 * @author Tsarpf
+	 *
+	 */
 	public class GameAndUserData
 	{
 		String nickname;

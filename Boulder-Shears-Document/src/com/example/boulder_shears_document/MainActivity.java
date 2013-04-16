@@ -7,7 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-
+/**
+ * So called main class of the android game client. Handles initialization
+ * @author Tsarpf
+ *
+ */
 public class MainActivity extends Activity {
 
 	public final static String EXTRA_MESSAGE = "com.example.boulder_shears_document.MESSAGE";
@@ -46,6 +50,10 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    /**
+     * 
+     *	Sends a message to the server using the IOThread's queue 
+     */
     public void sendMessage(View view)
     {
     	

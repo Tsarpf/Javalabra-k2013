@@ -1,6 +1,11 @@
 import java.io.*;
 import java.net.*;
 
+/**
+ * Main class for handling the server from the topmost level
+ * @author Tsarpf
+ *
+ */
 public class Server
 {
 	
@@ -11,6 +16,11 @@ public class Server
 	static String inputLine, outputLine;
 	static Protocol currentProtocol;
 	
+	/**
+	 * Initializes and starts the server
+	 * @param args
+	 * @throws IOException
+	 */
     public static void main(String[] args) throws IOException
     {
     	

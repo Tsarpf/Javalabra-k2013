@@ -1,4 +1,6 @@
-
+/**
+ * Protocol for handling server's side of the game 'Boulder-Shears-Document'
+ */
 public class BoulderShearsDocumentProtocol extends Protocol
 {
 	GameData data;
@@ -8,6 +10,7 @@ public class BoulderShearsDocumentProtocol extends Protocol
 		super();
 	}
 	
+	@Override
 	public String processInput(String input)
 	{
 		try
@@ -34,8 +37,8 @@ public class BoulderShearsDocumentProtocol extends Protocol
 		case DOCUMENT:
 			option = "2 - document";
 			break;
-		case END:
-			state = State.SUCCESS;
+		case SURRENDER:
+			state = State.EXITING;
 			option = "3 - end";
 			break;
 		default:
@@ -46,17 +49,23 @@ public class BoulderShearsDocumentProtocol extends Protocol
 		return returnString + option;
 	}
 	
+	/**
+	 * Contains information about which player did what in his/her turn
+	 */
 	class GameData
 	{
 		String playerName;
 		GameMove move;
 	}
-	
+
+	/**
+	 * Describes all possible moves a player could make in the game this protocol is used for
+	 */
 	enum GameMove
 	{
 		BOULDER,
 		SHEARS,
 		DOCUMENT,
-		END
+		SURRENDER
 	}
 }

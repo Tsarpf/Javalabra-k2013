@@ -10,11 +10,19 @@ import java.net.UnknownHostException;
 
 import android.util.Log;
 
+/**
+ * Handles the socket needed for communication between client and server
+ * @author Tsarpf
+ *
+ */
 public class SocketClient
 {
 	Socket socket;
 	PrintWriter out;
 	BufferedReader in;
+	/**
+	 * Initializes and creates the connection
+	 */
 	public SocketClient(String host, int port)
 	{
 		Log.w("debug", "Creating SocketClient");
@@ -41,11 +49,18 @@ public class SocketClient
 		Log.w("debug", "SocketClient made");
 	}
 	
+	/**
+	 * Simply pushes a string to the output stream
+	 * @param message Message to send in plain text
+	 */
 	public void sendLine(String message)
 	{
 		out.println(message);
 	}
 	
+	/**
+	 * Reads a line from the input stream. Waits for something to appear in the stream if it is empty
+	 */
 	public String readLine()
 	{
 		try
@@ -59,11 +74,17 @@ public class SocketClient
 		}
 	}
 	
+	/**
+	 * Indicates whether stream is readable without waiting
+	 */
 	public boolean readyForRead() throws IOException
 	{
 		return in.ready();
 	}
 	
+	/**
+	 * Cleans up everything by closing sockets and streams
+	 */
 	public void close()
 	{
 		try

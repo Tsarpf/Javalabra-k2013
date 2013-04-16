@@ -11,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Shows messages from server
+ * @author Tsarpf
+ *
+ */
 public class DisplayMessageActivity extends Activity
 {
 
