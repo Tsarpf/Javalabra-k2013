@@ -1,21 +1,26 @@
 import java.net.Socket;
-
+import CommonData.GameAndUserData;
 
 public class Player
-{	
-	String name;
-	
+{		
 	PlayerIOThread thread;
+	
+	GameAndUserData data;
 	
 	public Player(Socket socket, PlayerPool pool)
 	{
 		thread = new PlayerIOThread(socket, this, pool);
 	}
 	
+	public void setData(GameAndUserData data)
+	{
+		this.data = data;
+	}
+	
 	
 	public String getName()
 	{
-		return name;
+		return data.nickname;
 	}
 	
 	@Override
@@ -36,7 +41,7 @@ public class Player
 			return false;
 		}
 		
-		if(this.name == ((Player)other).getName())
+		if(this.getName() == ((Player)other).getName())
 		{
 			return true;
 		}
@@ -47,7 +52,7 @@ public class Player
 	@Override
     public int hashCode()
 	{
-		return name.hashCode();
+		return getName().hashCode();
 	}
 }
 

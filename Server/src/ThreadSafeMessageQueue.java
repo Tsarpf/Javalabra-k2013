@@ -3,19 +3,19 @@ import java.util.ArrayList;
 
 public class ThreadSafeMessageQueue
 {
-	ArrayList<Object> queue;
+	ArrayList<String> queue;
 	
 	public ThreadSafeMessageQueue()
 	{
-		queue = new ArrayList<Object>();
+		queue = new ArrayList<String>();
 	}
 	
-	public synchronized void enqueue(Object o)
+	public synchronized void enqueue(String msg)
 	{
-		queue.add(o);
+		queue.add(msg);
 	}
 	
-	public synchronized Object dequeue()
+	public synchronized String dequeue()
 	{
 		if(queue.size() == 0)
 		{

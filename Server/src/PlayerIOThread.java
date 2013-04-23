@@ -5,7 +5,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
-
+import com.google.gson.*;
+import CommonData.GameAndUserData;
 
 public class PlayerIOThread extends Thread
 {
@@ -13,11 +14,16 @@ public class PlayerIOThread extends Thread
 	private PrintWriter out;
 	private BufferedReader in;
 	
-	private ThreadSafeMessageQueue inQueue;
-	private ThreadSafeMessageQueue outQueue;
+	
+	private ArrayList<String> inMessages;
+	private ArrayList<String> outMessages;
 	
 	Player player;
 	PlayerPool pool;
+	
+	boolean finished = false;
+	
+	Gson gson;
 	
 	public PlayerIOThread(Socket socket, Player player, PlayerPool pool)
 	{
@@ -27,8 +33,10 @@ public class PlayerIOThread extends Thread
 		this.player = player;
 		this.pool = pool;
 		
-		inQueue = new ThreadSafeMessageQueue();
-		outQueue = new ThreadSafeMessageQueue();
+		inMessages = new ArrayList<String>();
+		outMessages = new ArrayList<String>();
+		
+		gson = new Gson();
 	}
 	
 	public void run()
@@ -40,23 +48,88 @@ public class PlayerIOThread extends Thread
 			
 			handShake();
 			addPlayerToPool();
+			loop();
 		}
 		catch(IOException e)
 		{
 			
 		}
+		catch(InterruptedException e)
+		{
+			
+		}
+	}
+	
+	synchronized public void finishThread()
+	{
+		finished = true;
+	}
+	
+	synchronized private boolean finished()
+	{
+		return finished;
+	}
+	
+	private void loop() throws IOException, InterruptedException
+	{
+		while(!finished()) //Behind a function to ensure thread safety
+		{
+			if(messagesToSend())
+			{
+				out.println(getMessageForSending());
+			}
+			
+			if(in.ready())
+			{
+				addMessageForReceiving(in.readLine());
+			}
+			
+			Thread.sleep(100);
+		}
+		
+		cleanUp();
+	}
+	
+	private void cleanUp() throws IOException
+	{
+		in.close();
+		out.close();
+		socket.close();
+	}
+	
+	synchronized private void addMessageForReceiving(String message)
+	{
+		inMessages.add(message);
+	}
+	
+	synchronized private String getMessageForSending()
+	{
+		return outMessages.remove(0);
+	}
+	
+	synchronized private boolean messagesToSend()
+	{
+		return outMessages.size() > 0;
 	}
 	
 	synchronized public void sendMessage(String msg)
 	{
-		outQueue.enqueue(msg);
+		outMessages.add(msg);
 	}
 	
-	 
-	
-	private void loop()
+	synchronized public String receiveMessage()
 	{
+		if(inMessages.size() > 0)
+		{
+			return inMessages.remove(0);
+		}
 		
+		return null;
+	}
+	
+	synchronized public boolean messagesReceived()
+	{
+		return inMessages.size() > 0;
 	}
 	
 	private void addPlayerToPool()
@@ -83,20 +156,21 @@ public class PlayerIOThread extends Thread
 			}
 		}
 		
-	}
-	
-	public boolean messageReceived() throws IOException
-	{
-		return in.ready();
-	}
-	
-	public String receiveMessage() throws IOException
-	{
-		return in.readLine();
-	}
-	
-	public void sendMessage(String message)
-	{
-		out.println(message);
+		while((input = in.readLine()) != null)
+		{
+			try
+			{
+				GameAndUserData data = gson.fromJson(input, GameAndUserData.class);
+				System.out.println(data.nickname + " connected. Wishes to play: " + data.gamemode);
+				player.setData(data);
+			}
+			catch(Exception e)
+			{
+				out.println("Invalid JSON: " + e.getMessage());
+			}
+		}
+		
+		System.out.println("Handshake'd with " + player.getName());
+		
 	}
 }
