@@ -3,13 +3,13 @@ import java.net.Socket;
 
 public class Player
 {	
-	ClientHandlerThread thread;
 	String name;
 	
+	PlayerIOThread thread;
 	
 	public Player(Socket socket, PlayerPool pool)
 	{
-		Client
+		thread = new PlayerIOThread(socket, this, pool);
 	}
 	
 	

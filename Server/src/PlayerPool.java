@@ -16,13 +16,16 @@ public class PlayerPool
 		SEARCHING
 	}
 	
+	boolean playersWaiting;
+	
 	public PlayerPool()
 	{
 		playersSearchingForGame = new ArrayList<Player>();
 		playersIdle = new ArrayList<Player>();
 		playersInGame = new ArrayList<Player>();
 	}
-	             
+	          
+	
 	public synchronized void newPlayer(Player player)
 	{
 		players.put(player, PlayerState.IDLE);
@@ -36,11 +39,25 @@ public class PlayerPool
 		playersIdle.add(player);
 	}
 	
-	public synchronized void playerLookingForGame(Player player)
+	public synchronized void playerSearching(Player player)
 	{
 		playersIdle.remove(player);
 		playersSearchingForGame.add(player);
 		players.put(player, PlayerState.SEARCHING);
+		playersWaiting = true;
+	}
+	
+	public synchronized Player getWaitingPlayer()
+	{
+		Player player = playersSearchingForGame.get(0);
+		playerPlaying(player);
+		
+		if(playersSearchingForGame.size() == 0)
+		{
+			playersWaiting = false;
+		}
+		
+		return player;
 	}
 	
 	public synchronized void playerPlaying(Player player)

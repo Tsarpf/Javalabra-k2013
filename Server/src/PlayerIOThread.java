@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class PlayerIOThread extends Thread
@@ -12,16 +13,22 @@ public class PlayerIOThread extends Thread
 	private PrintWriter out;
 	private BufferedReader in;
 	
-	private ArrayList<String> outMessages;
-	private ArrayList<String> inMessages;
+	private ThreadSafeMessageQueue inQueue;
+	private ThreadSafeMessageQueue outQueue;
 	
-	public PlayerIOThread(Socket socket)
+	Player player;
+	PlayerPool pool;
+	
+	public PlayerIOThread(Socket socket, Player player, PlayerPool pool)
 	{
 		super("ClientHandlerThread");
-		this.socket = socket;
 		
-		outMessages = new ArrayList<String>();
-		inMessages = new ArrayList<String>();
+		this.socket = socket;
+		this.player = player;
+		this.pool = pool;
+		
+		inQueue = new ThreadSafeMessageQueue();
+		outQueue = new ThreadSafeMessageQueue();
 	}
 	
 	public void run()
@@ -32,6 +39,7 @@ public class PlayerIOThread extends Thread
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 			handShake();
+			addPlayerToPool();
 		}
 		catch(IOException e)
 		{
@@ -39,13 +47,41 @@ public class PlayerIOThread extends Thread
 		}
 	}
 	
-	private void handShake()
+	synchronized public void sendMessage(String msg)
+	{
+		outQueue.enqueue(msg);
+	}
+	
+	 
+	
+	private void loop()
 	{
 		
 	}
 	
-	private void loop()
+	private void addPlayerToPool()
 	{
+		pool.newPlayer(player);
+	}
+	
+	private void handShake() throws IOException
+	{
+		String input = "";
+		int ping = new Random().nextInt();
+		
+		while((input = in.readLine()) !=  null)
+		{
+			if(input.startsWith("HELLO"))
+			{
+				out.println("PING" + ping);
+			}
+			else if(input.startsWith("PONG"))
+			{
+				//TODO actually check whether succeeded
+				out.println("SUCCESS");
+				break;
+			}
+		}
 		
 	}
 	

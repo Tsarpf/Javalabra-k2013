@@ -1,4 +1,4 @@
-package Data;
+package CommonData;
 class GameData
 {
 	String playerName;

@@ -5,4 +5,9 @@ public class MatchMakingThread extends Thread
 	{
 		
 	}
+	
+	public void run()
+	{
+		
+	}
 }
