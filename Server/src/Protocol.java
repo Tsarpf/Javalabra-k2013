@@ -8,7 +8,7 @@ import com.google.gson.*;
 public abstract class Protocol
 {
 
-	/*
+	/**
 	 * Is used to describe the current state of the protocol
 	 */
 	public enum State
@@ -28,7 +28,7 @@ public abstract class Protocol
 		gson = new Gson();
 	}
 	
-	/*
+	/**
 	 * Is used to determine whether protocol is for an actual game or for a handshake.
 	 */
 	public enum ProtocolType

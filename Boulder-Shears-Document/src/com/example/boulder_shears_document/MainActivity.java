@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
     	
     	//writeQueue.enqueue("HELLO");
     	
-    	ioThread = new IOThread("datisbox.net", 6666, writeQueue, readQueue);
+    	ioThread = new IOThread("tulipallo.datisbox.net", 6666, writeQueue, readQueue);
     	ioThread.start();
 
     }

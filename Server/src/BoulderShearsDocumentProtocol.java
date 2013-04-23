@@ -66,6 +66,7 @@ public class BoulderShearsDocumentProtocol extends Protocol
 		BOULDER,
 		SHEARS,
 		DOCUMENT,
-		SURRENDER
+		SURRENDER,
+		NEWOPPONENT //Player clicked a checkbox or something
 	}
 }

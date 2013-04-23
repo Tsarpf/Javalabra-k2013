@@ -110,11 +110,11 @@ public class Server
 				{
 					break;
 				}
-				else if(currentProtocol.state == Protocol.State.SUCCESS && currentProtocol.type == Protocol.ProtocolType.HANDSHAKE)
+				else if(currentProtocol.state == Protocol.State.SUCCEEDED && currentProtocol.type == Protocol.ProtocolType.HANDSHAKE)
 				{
 					currentProtocol = new BoulderShearsDocumentProtocol();
 				}
-				else if(currentProtocol.state == Protocol.State.SUCCESS)
+				else if(currentProtocol.state == Protocol.State.SUCCEEDED)
 				{
 					//Game complete
 					break;
