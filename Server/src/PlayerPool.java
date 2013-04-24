@@ -32,6 +32,7 @@ public class PlayerPool
 	
 	public synchronized void newPlayer(Player player)
 	{
+		System.out.println("Adding new player '" + player.getName() + "' to pool");
 		players.put(player, PlayerState.IDLE);
 		playersIdle.add(player);
 		
@@ -53,6 +54,8 @@ public class PlayerPool
 		playersSearchingForGame.add(player);
 		players.put(player, PlayerState.SEARCHING);
 		playersWaiting = true;
+		
+		
 	}
 	
 	public synchronized Player getSearchingPlayer()

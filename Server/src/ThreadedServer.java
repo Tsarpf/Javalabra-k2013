@@ -18,6 +18,9 @@ public class ThreadedServer
 		
 		boolean listening = true;
 		
+		MatchMakingThread mmThread = new MatchMakingThread(pool);
+		mmThread.start();
+		
 		try
 		{
 			serverSocket = new ServerSocket(5345);

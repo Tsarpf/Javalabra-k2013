@@ -35,6 +35,8 @@ public class BoulderShearsDocumentGame extends Thread
 	
 	public BoulderShearsDocumentGame(ArrayList<Player> players, PlayerPool pool)
 	{
+		System.out.println("Starting new game, best regards, BSDGame Constructor");
+		
 		this.pool = pool;
 		
 		playerOne = players.get(0);
@@ -51,6 +53,7 @@ public class BoulderShearsDocumentGame extends Thread
 	
 	public void run()
 	{
+		System.out.println("Started running BSDGame Thread");
 		initializeGame();
 		
 		try
@@ -216,6 +219,7 @@ public class BoulderShearsDocumentGame extends Thread
 	
 	private void initializeGame()
 	{
+		System.out.println("Initializing game...");
 		sendNewGame();
 		sendGameInfo(true);
 	}
@@ -289,7 +293,7 @@ public class BoulderShearsDocumentGame extends Thread
 		gameProtocol.sendNewGame(playerOne, newGame);
 		
 		NewGameData newGameTwo = new NewGameData();
-		newGame.opponentName = playerOne.getName();
+		newGameTwo.opponentName = playerOne.getName();
 		gameProtocol.sendNewGame(playerTwo, newGameTwo);
 	}
 	

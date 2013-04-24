@@ -43,6 +43,8 @@ public class MatchMakingThread extends Thread
 			
 			Player player = pool.getSearchingPlayer();
 			
+			System.out.println("Player '" + player.getName() + "' was found by MatchMaking thread...");
+			
 			//TODO: player class should contain information about what game player wants to play.
 			
 			playersForNextBoulderShearsDocumentGame.add(player);

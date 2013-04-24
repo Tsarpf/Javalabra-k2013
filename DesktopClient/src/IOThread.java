@@ -1,5 +1,7 @@
 
 
+import CommonData.GameData;
+
 import com.google.gson.Gson;
 
 /**
@@ -63,6 +65,17 @@ public class IOThread extends Thread
 		if(o instanceof String)
 		{
 			client.sendLine((String) o);
+		}
+		else if(o instanceof GameData)
+		{
+			System.out.println("Sending gamedata");
+			Gson gson = new Gson();
+			GameData data = (GameData)o;
+			
+			System.out.println(data.choice + " " + data.move.toString());
+			
+			String json = gson.toJson(data);
+			client.sendLine(json);
 		}
 		else
 		{

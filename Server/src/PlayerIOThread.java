@@ -172,6 +172,8 @@ public class PlayerIOThread extends Thread
 				GameAndUserData data = gson.fromJson(input, GameAndUserData.class);
 				System.out.println(data.nickname + " connected. Wishes to play: " + data.gamemode);
 				player.setData(data);
+				
+				break;
 			}
 			catch(Exception e)
 			{
