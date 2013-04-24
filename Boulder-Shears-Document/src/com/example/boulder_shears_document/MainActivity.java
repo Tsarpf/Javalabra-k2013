@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import CommonData.*;
 /**
  * So called main class of the android game client. Handles initialization
  * @author Tsarpf
@@ -62,9 +63,15 @@ public class MainActivity extends Activity {
     	Intent intent = new Intent(this, DisplayMessageActivity.class);
     	
     	EditText editText = (EditText) findViewById(R.id.edit_message);
-    	String message = editText.getText().toString();
+    	String nick = editText.getText().toString();
     	
-    	writeQueue.enqueue(message);
+    	GameAndUserData data = new GameAndUserData();
+    	
+    	data.gamemode = "AsdfThisDoesntMatterYetIThink";
+    	data.nickname = nick;
+    	
+    	///writeQueue.enqueue(message);
+    	writeQueue.enqueue(data);
     	
     	String response;
     	
