@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PlayerPool
@@ -7,7 +8,8 @@ public class PlayerPool
 	private ArrayList<Player> playersSearchingForGame;
 	private ArrayList<Player> playersIdle;
 	private ArrayList<Player> playersInGame;
-	private Dictionary<Player, PlayerState> players; 
+	
+	private Map<Player, PlayerState> players; 
 	
 	enum PlayerState
 	{
@@ -23,13 +25,19 @@ public class PlayerPool
 		playersSearchingForGame = new ArrayList<Player>();
 		playersIdle = new ArrayList<Player>();
 		playersInGame = new ArrayList<Player>();
+		players = new HashMap<Player, PlayerState>();
 	}
-	          
+	       
+	
 	
 	public synchronized void newPlayer(Player player)
 	{
 		players.put(player, PlayerState.IDLE);
 		playersIdle.add(player);
+		
+		//TODO: lobby implementation. The following is just a temporary solution:
+		
+		playerSearching(player);
 	}
 	
 	public synchronized void playerLeftGame(Player player)
@@ -47,7 +55,7 @@ public class PlayerPool
 		playersWaiting = true;
 	}
 	
-	public synchronized Player getWaitingPlayer()
+	public synchronized Player getSearchingPlayer()
 	{
 		Player player = playersSearchingForGame.get(0);
 		playerPlaying(player);

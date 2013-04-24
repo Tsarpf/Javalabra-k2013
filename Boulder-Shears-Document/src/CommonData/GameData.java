@@ -1,6 +1,6 @@
 package CommonData;
 class GameData
 {
-	String playerName;
+	GameAndUserData data;
 	GameMove move;
 }

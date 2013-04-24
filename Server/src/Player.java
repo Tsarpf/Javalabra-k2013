@@ -3,9 +3,9 @@ import CommonData.GameAndUserData;
 
 public class Player
 {		
-	PlayerIOThread thread;
+	private PlayerIOThread thread;
 	
-	GameAndUserData data;
+	private GameAndUserData data;
 	
 	public Player(Socket socket, PlayerPool pool)
 	{
@@ -21,6 +21,21 @@ public class Player
 	public String getName()
 	{
 		return data.nickname;
+	}
+	
+	public void sendMessage(String json)
+	{
+		thread.sendMessage(json);
+	}
+	
+	public boolean messagesReceived()
+	{
+		return thread.messagesReceived();
+	}
+	
+	public String receiveMessage()
+	{
+		return thread.receiveMessage();
 	}
 	
 	@Override
@@ -39,7 +54,7 @@ public class Player
 		if (this.getClass() != other.getClass())
 		{
 			return false;
-		}
+		}	
 		
 		if(this.getName() == ((Player)other).getName())
 		{
