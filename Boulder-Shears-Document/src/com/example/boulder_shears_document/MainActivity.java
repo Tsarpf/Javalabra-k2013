@@ -34,9 +34,11 @@ public class MainActivity extends Activity {
     	readQueue = new ThreadSafeQueue();
     	writeQueue = new ThreadSafeQueue();
     	
-    	//writeQueue.enqueue("HELLO");
-    	
-    	ioThread = new IOThread("tulipallo.datisbox.net", 6666, writeQueue, readQueue);
+    	writeQueue.enqueue("HELLO");
+    	//10.0.2.2
+    	//ioThread = new IOThread("tulipallo.datisbox.net", 5345, writeQueue, readQueue;
+    	//ioThread = new IOThread("tulipallo.datisbox.net", 5345, writeQueue, readQueue);
+    	ioThread = new IOThread("shadowmistress.manticore.fi", 5345, writeQueue, readQueue);
     	ioThread.start();
 
     }

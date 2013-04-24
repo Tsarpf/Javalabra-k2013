@@ -20,45 +20,22 @@ public class ThreadedServer
 		
 		try
 		{
-			serverSocket = new ServerSocket(6666);
+			serverSocket = new ServerSocket(5345);
 		}
 		catch(IOException e)
 		{
-			System.out.println("Couldn't listen on port 6666");
+			System.out.println("Couldn't listen on port 5345");
 		}
 		
 		while(listening)
 		{
+			System.out.println("Waiting for accept");
 			Socket socket = serverSocket.accept();
 			
-			Player player = new Player(socket, pool);
+			System.out.println("Accepted, creating new player..");
+			//Player player = new Player(socket, pool);
+			
+			new Player(socket, pool);
 		}
 	}
-
 }
-
-
-
-/*
-import java.net.*;
-import java.io.*;
-
-public class KKMultiServer {
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = null;
-        boolean listening = true;
-
-        try {
-            serverSocket = new ServerSocket(4444);
-        } catch (IOException e) {
-            System.err.println("Could not listen on port: 4444.");
-            System.exit(-1);
-        }
-
-        while (listening)
-	    new KKMultiServerThread(serverSocket.accept()).start();
-
-        serverSocket.close();
-    }
-}
-*/

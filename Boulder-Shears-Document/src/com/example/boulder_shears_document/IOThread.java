@@ -49,7 +49,7 @@ public class IOThread extends Thread
 					write(o);
 				}
 				
-				Thread.sleep(50);
+				Thread.sleep(100);
 			}
 		}
 		catch(Exception e)
@@ -78,6 +78,8 @@ public class IOThread extends Thread
 	private void read()
 	{
 		String line = client.readLine();
+		
+		
 		Log.w("IOThread read","From server: " + line);
 		
 		if(line.startsWith("PING"))

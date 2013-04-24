@@ -27,7 +27,7 @@ public class PlayerIOThread extends Thread
 	
 	public PlayerIOThread(Socket socket, Player player, PlayerPool pool)
 	{
-		super("ClientHandlerThread");
+		super("PlayerIOThread");
 		
 		this.socket = socket;
 		this.player = player;
@@ -43,7 +43,7 @@ public class PlayerIOThread extends Thread
 	{
 		try
 		{
-			out = new PrintWriter(socket.getOutputStream());
+			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
 			handShake();
@@ -76,12 +76,16 @@ public class PlayerIOThread extends Thread
 		{
 			if(messagesToSend())
 			{
-				out.println(getMessageForSending());
+				String msg = getMessageForSending();
+				System.out.println("Sending: " + msg);
+				out.println(msg);
 			}
 			
 			if(in.ready())
 			{
-				addMessageForReceiving(in.readLine());
+				String msg = in.readLine();
+				System.out.println("Receiving: " + msg);
+				addMessageForReceiving(msg);
 			}
 			
 			Thread.sleep(100);
@@ -144,9 +148,13 @@ public class PlayerIOThread extends Thread
 		
 		while((input = in.readLine()) !=  null)
 		{
-			if(input.startsWith("HELLO"))
+			System.out.println("Receiving: " + input);
+			
+			if(input.startsWith("HELLO") || input.equals("HELLO"))
 			{
-				out.println("PING" + ping);
+				String msg = "PING" + ping;
+				System.out.println("Sending: " + msg);
+				out.println(msg);
 			}
 			else if(input.startsWith("PONG"))
 			{
@@ -158,6 +166,7 @@ public class PlayerIOThread extends Thread
 		
 		while((input = in.readLine()) != null)
 		{
+			System.out.println("Receiving: " + input);
 			try
 			{
 				GameAndUserData data = gson.fromJson(input, GameAndUserData.class);

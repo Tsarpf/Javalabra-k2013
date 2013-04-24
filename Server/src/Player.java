@@ -9,7 +9,10 @@ public class Player
 	
 	public Player(Socket socket, PlayerPool pool)
 	{
+		System.out.println("creating new player IO thread");
 		thread = new PlayerIOThread(socket, this, pool);
+		System.out.println("thread created, starting thread");
+		thread.start();
 	}
 	
 	public void setData(GameAndUserData data)
