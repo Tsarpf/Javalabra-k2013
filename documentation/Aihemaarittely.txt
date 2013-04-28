@@ -1,16 +1,15 @@
-Aihe: Joko PC:llä / Androidilla tai molemmilla toimiva jokin hyvin yksinkertainen vuoropohjainen peli + palvelin. 
+﻿Aihe: Kivi-sakset-paperi client ja server.
 
-Jos oman palvelimen kirjoittaminen vaikuttaa ensimmäisen viikon aikana tehdyn arvion aikana tarpeeksi helpolta, luultavasti peli on tasoa kivi-sakset-paperi. Jos serverin tekeminen osoittautuu oletettua vaikeammaksi ja ei tule onnistumaan, aihe vaihtunee lokaaliksi ristinollaksi/miinaharavaksi/joksikin muuksi vastaavaksi
+Client:
+Yksinkertainen kaikilla javaa tukevilla komentorivisysteemeillä toimiva sovellus joka ottaa yhteyden serveriin. 
+Ohjelmalla voi pelata perus KSP:tä kirjoittamalla ensin haluamansa nimimerkin ja sen jälkeen kun peli on alkanut,
+eli kun on vastaanottanut vastustajansa tiedot, voi tehdä siirtonsa kirjoittamalla boulder, shears tai document
+(=lohkare/keritsimet/dokumentti).
 
-Palvelin oletettavasti hyvin yksinkertainen socketien kautta JSONia edestakaisin siirtävä.
+Server:
+Säikeistetty serveri joka tukee useita samanaikaisia pelejä ja pelaajia. Hoitaa pelaajien välillä pelaajien
+tietojen sekä vuorolla valitun siirron siirtelyt samassa pelissä pelaavien välillä. Myös pisteiden lasku ja
+kierroksen voittajan määrittäminen tehdään serverin päässä.
 
 
-
-
-Kurssilla riittää varmaankin olettaa, että clientien lähettämä data on järkevää, joten siirtojen mahdollisuutta/järkevyyttä ei tarvitsene tarkistaa. 
-
-Palvelin siis hieman yksinkertaistettuna ainoastaan välittää siirtoja pelaajien välillä ja ehkä pitää kirjaa pelin tilanteesta.
-
-Palvelin voisi esimerkiksi kirjoittaa tilastoja vaikkapa tekstitiedostoon josta jokin cron tyylinen ratkaisu voisi päivittää arvoja toisinaan internetsivustolle (esim  virtuaalipalvelimelleni datisbox.net). Jotain mahdollisimman simppeliä kuitenkin.
-
-Palvelimesta on tarkoitus tehdä sellainen, että sitä on hyvin helppo laajentaa tukemaan myös muita kuin alkuperäistä peliä.
+Käyttäjät: Pelin pelaamisesta kiinnostuneet henkilöt.

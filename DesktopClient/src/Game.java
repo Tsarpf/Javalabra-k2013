@@ -17,7 +17,7 @@ public class Game extends Thread
 		
 		writeQueue.enqueue("HELLO");
 		
-		thread = new IOThread("shadowmistress.manticore.fi", 5345, writeQueue, readQueue);
+		thread = new IOThread("datisbox.net", 5345, writeQueue, readQueue);
 		thread.start();
 		
 		GameAndUserData data = new GameAndUserData();
