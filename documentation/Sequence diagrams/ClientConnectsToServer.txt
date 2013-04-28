@@ -1,0 +1,28 @@
+title What happens at the server when a client connects
+
+Client->ThreadedServer: connects
+ThreadedServer->Client: accepts connection
+
+ThreadedServer->Player: creates a new socket for the client and gives it to a new instance of the player class
+
+Socket->PlayerIOThread: client automatically sends "HELLO"
+
+PlayerIOThread->Socket: server handshake method automatically responds with "PING" + random integer
+
+Socket->PlayerIOThread: client automatically responds with "PONG" + the random integer
+
+
+Socket->PlayerIOThread: client user manually enters his/her nickname and sends it
+
+PlayerIOThread->PlayerPool: client is added to the player pool
+
+
+
+alt Pool has two players waiting
+    PlayerPool->MatchMakingThread: MMThread takes two players from the pool and creates a new game
+
+MatchMakingThread->BoulderShearsDocumentGame: MMThread creates a new game and adds the players to it
+
+else Not enough players waiting
+    MatchMakingThread->PlayerPool: continuously checks if there are enough players for a game
+end

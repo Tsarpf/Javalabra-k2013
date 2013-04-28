@@ -45,7 +45,7 @@ public class MatchMakingThread extends Thread
 			
 			System.out.println("Player '" + player.getName() + "' was found by MatchMaking thread...");
 			
-			//TODO: player class should contain information about what game player wants to play.
+			//TODO: player class should contain information about what game player specifically wants to play.
 			
 			playersForNextBoulderShearsDocumentGame.add(player);
 			

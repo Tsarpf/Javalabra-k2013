@@ -35,7 +35,7 @@ public class BoulderShearsDocumentGame extends Thread
 	
 	public BoulderShearsDocumentGame(ArrayList<Player> players, PlayerPool pool)
 	{
-		System.out.println("Starting new game, best regards, BSDGame Constructor");
+		System.out.println("Starting new game");
 		
 		this.pool = pool;
 		

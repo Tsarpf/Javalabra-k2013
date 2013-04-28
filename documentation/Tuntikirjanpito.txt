@@ -1,2 +1,20 @@
-Päiväys         käytetty aika           ajankäytön kohde
+﻿Päiväys         käytetty aika           ajankäytön kohde
 12.3.2013       2h                      Projektin valmistelu ja alustus
+
+19.3.2013 	6h			Opeteltu androidia, kehitetty hyvin yksinkertaista serverin alkua.
+
+26.3.2013	6h			Saatu androidilta viestit lähtemään serverille. Tehty muutamia testejä.
+					Päivitetty luokkakaaviota
+
+28.3.2013	2h			Tehty clientin threadauksesta fiksumpaa
+
+16.4.2013	2h			Tehty perus javadocit
+
+22.4.2013	8h			Aloitettu serverin kirjoittaminen uusiksi. Unohdettu tehä tarpeeksi usein
+					committeja
+
+23.4.2013	20h			Uusi serveri valmis ja client portattu desktopille. Unohdettu tehä tarpeeksi
+					usein committeja
+
+
+28.4		6h			Kirjoitettu dokumentaatiota

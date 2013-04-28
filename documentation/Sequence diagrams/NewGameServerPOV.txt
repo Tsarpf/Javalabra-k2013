@@ -1,0 +1,14 @@
+title New game from server point of view
+
+MatchMaker->BSDGame: MatchMaker gives the new game two players and a reference to the PlayerPool through constructor parameters
+MatchMaker->BSDGame: Starts the game thread
+
+BSDGame->Players: Sends opponents name to each player
+
+loop text
+    Players->BSDGame: Players send their move
+    BSDGame->Players: When both players have made their move, sends Won/Lost/Draw + each players score in the current game, and a new game begins.
+end
+
+
+BSDGame->PlayerPool: When one player wants to stop playing, returns both player to the pool.

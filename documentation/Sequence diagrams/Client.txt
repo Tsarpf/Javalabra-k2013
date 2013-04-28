@@ -1,0 +1,30 @@
+title Client
+
+User->Main: starts program
+
+Main->Game: creates new instance
+
+Game->IOThread: creates new instance
+
+Game->IOThread: starts the new thread
+
+IOThread->Game: Gives a reference to the output queue to Game
+
+loop Checking if something new in queues
+    IOThread->outputQueue: Checks if new items added. If found, sends contents to server
+    
+IOThread->outputQueue: If found ping, adds pong
+
+IOThread->User: If IOThread receives something from server, shows to user
+   If
+end
+
+Game->outputQueue: adds "HELLO"
+Game->User: Asks for nickname
+Game->outputQueue: adds nickname to outputQueue
+
+
+loop After new game started by server
+    Game->User: Asks for players move
+    Game->outputQueue: If move was correct, adds to outputQueue
+end
