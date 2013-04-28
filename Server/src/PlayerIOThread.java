@@ -10,7 +10,7 @@ import CommonData.GameAndUserData;
 
 public class PlayerIOThread extends Thread
 {
-	Socket socket;
+	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
 	
@@ -18,13 +18,19 @@ public class PlayerIOThread extends Thread
 	private ArrayList<String> inMessages;
 	private ArrayList<String> outMessages;
 	
-	Player player;
-	PlayerPool pool;
+	private Player player;
+	private PlayerPool pool;
 	
-	boolean finished = false;
+	private boolean finished = false;
 	
-	Gson gson;
+	private Gson gson;
 	
+	/**
+	 * Handles all input/output for this player
+	 * @param socket the socket through which the players connection was accepted.
+	 * @param player the player in question
+	 * @param pool the main player pool used throughout the server.
+	 */
 	public PlayerIOThread(Socket socket, Player player, PlayerPool pool)
 	{
 		super("PlayerIOThread");
@@ -39,6 +45,7 @@ public class PlayerIOThread extends Thread
 		gson = new Gson();
 	}
 	
+	@Override
 	public void run()
 	{
 		try
@@ -60,19 +67,26 @@ public class PlayerIOThread extends Thread
 		}
 	}
 	
+	/**
+	 * Player has exited, end his/her IO thread
+	 */
 	synchronized public void finishThread()
 	{
 		finished = true;
 	}
 	
-	synchronized private boolean finished()
+	synchronized private boolean isFinished()
 	{
 		return finished;
 	}
 	
+	/**
+	 * Continuously checks if client has sent something, or if there is something we should send him.
+	 * If there is, sends/receives as appropriate
+	 */
 	private void loop() throws IOException, InterruptedException
 	{
-		while(!finished()) //Behind a function to ensure thread safety
+		while(!isFinished()) //Behind a function to ensure thread safety
 		{
 			if(messagesToSend())
 			{
@@ -94,6 +108,9 @@ public class PlayerIOThread extends Thread
 		cleanUp();
 	}
 	
+	/**
+	 * Closes socket and cleans up streams
+	 */
 	private void cleanUp() throws IOException
 	{
 		in.close();
@@ -131,6 +148,10 @@ public class PlayerIOThread extends Thread
 		return null;
 	}
 	
+	/**
+	 * Checks if new messages have been received from the server
+	 * @return
+	 */
 	synchronized public boolean messagesReceived()
 	{
 		return inMessages.size() > 0;
@@ -141,6 +162,12 @@ public class PlayerIOThread extends Thread
 		pool.newPlayer(player);
 	}
 	
+	/**
+	 * Works the client through basic handshake.
+	 * Makes sure the client is capable of responding to a basic ping thingy
+	 * Sets a nickname for the player.
+	 * @throws IOException
+	 */
 	private void handShake() throws IOException
 	{
 		String input = "";
@@ -172,7 +199,7 @@ public class PlayerIOThread extends Thread
 				GameAndUserData data = gson.fromJson(input, GameAndUserData.class);
 				System.out.println(data.nickname + " connected. Wishes to play: " + data.gamemode);
 				player.setData(data);
-				
+				//TODO: Check if nickname is already used
 				break;
 			}
 			catch(Exception e)

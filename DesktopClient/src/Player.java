@@ -1,14 +1,22 @@
 import java.util.Scanner;
 import CommonData.*;
 
-public class Game extends Thread
+/**
+ * Handles setting up and running everything for a new player (from client side)
+ * @author Tsarpf
+ *
+ */
+public class Player extends Thread
 {
 	
 	IOThread thread;
 	ThreadSafeQueue readQueue, writeQueue;
 	Scanner reader;
 	
-	public Game() 
+	/**
+	 * Sets up stuff
+	 */
+	public Player() 
 	{
 		readQueue = new ThreadSafeQueue();
 		writeQueue = new ThreadSafeQueue();
@@ -30,6 +38,15 @@ public class Game extends Thread
 		
 		writeQueue.enqueue(data);
 		
+		
+		loop();
+	}
+	
+	/**
+	 * Handles looping for basic command line gameplay for the player.
+	 */
+	private void loop()
+	{
 		String input = "";
 		
 		GameData gameData;

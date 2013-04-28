@@ -1,6 +1,11 @@
 import CommonData.*;
 import com.google.gson.*;
 
+/**
+ * Handles communication between the game and a player's IO thread
+ * @author Tsarpf
+ *
+ */
 public class BoulderShearsDocumentGameProtocol
 {
 	Gson gson;

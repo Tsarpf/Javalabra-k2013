@@ -2,13 +2,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.*;
 
-
+/**
+ * Class that contains the main function for the server program.
+ * @author Tsarpf
+ *
+ */
 public class ThreadedServer
 {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) throws IOException
 	{
 		ServerSocket serverSocket = null;

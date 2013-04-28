@@ -1,29 +1,34 @@
 import java.util.ArrayList;
 
-
+/**
+ * Thread that continuously checks player pool for possibilities to start new games between players.
+ * @author Tsarpf
+ *
+ */
 public class MatchMakingThread extends Thread
 {
+	/**
+	 * Main PlayerPool used throughout the server
+	 */
 	PlayerPool pool;
-	///ArrayList<Player> playersPlaying;
-	//ArrayList<Player> playersSearching;
 	
 	//TODO: add support for different games
-	//ArrayList<BoulderShearsDocumentGame> games;
+	//TODO: Create separate games handler and separate game winner determiner or something.
 	
 	ArrayList<Player> playersForNextBoulderShearsDocumentGame;
 	
+	/**
+	 * 
+	 * @param pool Main PlayerPool used throughout the server
+	 */
 	public MatchMakingThread(PlayerPool pool)
 	{
-		//playersPlaying = new ArrayList<Player>();
-		//playersSearching = new ArrayList<Player>();
-		//games = new ArrayList<BoulderShearsDocumentGame>();
-		
 		this.pool = pool;
 		
 		playersForNextBoulderShearsDocumentGame = new ArrayList<Player>();
 	}
 	
-	
+	@Override
 	public void run()
 	{
 		while(true)
@@ -41,7 +46,7 @@ public class MatchMakingThread extends Thread
 				continue;
 			}
 			
-			Player player = pool.getSearchingPlayer();
+			Player player = pool.getFirstSearchingPlayer();
 			
 			System.out.println("Player '" + player.getName() + "' was found by MatchMaking thread...");
 			
@@ -51,7 +56,9 @@ public class MatchMakingThread extends Thread
 			
 			if(playersForNextBoulderShearsDocumentGame.size() == 2)
 			{
-				new BoulderShearsDocumentGame(playersForNextBoulderShearsDocumentGame, pool).start();
+				//TODO: Make this less ugly. 
+				new BoulderShearsDocumentGame(playersForNextBoulderShearsDocumentGame.get(0),
+						playersForNextBoulderShearsDocumentGame.get(1), pool).start();
 				playersForNextBoulderShearsDocumentGame.clear();
 			}
 			

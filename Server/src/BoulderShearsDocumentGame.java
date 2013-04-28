@@ -2,17 +2,15 @@ import java.util.ArrayList;
 
 import CommonData.*;
 
-
+/**
+ * This class really needs refactoring and rewriting 
+ * Class that handles everything that happens in a game between two players.
+ * Should be separated to one "turn-based-games handler" and Boulder-Shears-Document specific game handler but ran out of time.
+ * @author Tsarpf
+ *
+ */
 public class BoulderShearsDocumentGame extends Thread
 {
-	//ArrayList<Player> players;
-	
-	//Map<Player, Integer> scoreDic;
-	
-	//GameInfo info;
-	
-	
-	
 	Player playerOne;
 	Player playerTwo;
 	
@@ -33,14 +31,20 @@ public class BoulderShearsDocumentGame extends Thread
 	
 	PlayerPool pool;
 	
-	public BoulderShearsDocumentGame(ArrayList<Player> players, PlayerPool pool)
+/**
+ * 
+ * @param playerOne Player one
+ * @param playerTwo Player two
+ * @param pool Main player pool used throughout the server.
+ */
+	public BoulderShearsDocumentGame(Player playerOne, Player playerTwo, PlayerPool pool)
 	{
 		System.out.println("Starting new game");
 		
 		this.pool = pool;
 		
-		playerOne = players.get(0);
-		playerTwo = players.get(1);
+		this.playerOne = playerOne;
+		this.playerTwo = playerTwo;
 		
 		playerOneScore = 0;
 		playerTwoScore = 0;
@@ -51,6 +55,7 @@ public class BoulderShearsDocumentGame extends Thread
 		continuePlaying = true;
 	}
 	
+	@Override
 	public void run()
 	{
 		System.out.println("Started running BSDGame Thread");
@@ -173,6 +178,9 @@ public class BoulderShearsDocumentGame extends Thread
 		winner = null;
 	}
 	
+	/**
+	 * Determines which player one according to the instance-wide variables set from elsewhere.
+	 */
 	private void determineWinner()
 	{
 		if(playerOneMove == playerTwoMove)
