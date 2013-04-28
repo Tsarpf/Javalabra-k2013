@@ -17,4 +17,7 @@
 					usein committeja
 
 
-28.4		6h			Kirjoitettu dokumentaatiota
+28.4		6h			Tehty luokkakaavioita, tarkennettu aihemääritelmää hiukan, tehty sekvenssi-
+					kaavioita. Todettu että testaus vaatisi jotain 12h lisäaikaa sillä siihen
+					tarvittaisiin clientille testiserveri ja serverille testiclient. Joten
+					testausta ihan turha ruveta tekemään
